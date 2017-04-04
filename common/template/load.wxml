@@ -1,0 +1,11 @@
+
+<template name="load">
+    <view class="weui-loadmore gray {{loading}} ">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">加载中...</view>
+    </view>
+
+    <view class="weui-loadmore weui-loadmore_line toload {{loadFail}} " bindtap="tap" data-event="GetList">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">点击屏幕重新加载</view>
+    </view>
+</template>

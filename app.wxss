@@ -1,0 +1,10 @@
+@import "style/weui_1.1.1.wxss";
+
+.toload{
+    height: 600rpx;
+    padding-top: 200rpx;
+    /*background-color: cadetblue;*/
+}
+.hidden{
+    display: none;
+}

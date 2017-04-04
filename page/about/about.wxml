@@ -1,0 +1,22 @@
+<import src="../../common/template/load.wxml" />
+
+<template is="load" data="{{...load}}" />
+
+<view class="page">
+
+    <!-- year -->
+    <block wx:for="{{dataList}}" wx:key="key_article" wx:for-index="index_article" wx:for-item="item_article">
+
+        <view class="weui-article about-box">
+            <view class="weui-article__h1 about-title">{{item_article.title}}</view>
+            <view class="weui-article__section">
+                <!-- content -->
+                <block wx:for="{{item_article.content_list}}" wx:key="key" wx:for-index="index" wx:for-item="item">
+                    <view class="weui-artical__p">{{item}}</view>
+                </block>
+            </view>
+        </view>
+
+    </block>
+
+</view>

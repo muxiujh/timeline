@@ -1,0 +1,10 @@
+.about-box{
+    margin: 30rpx;
+}
+.about-title{
+    text-align: center;
+    border: solid 1px;
+    margin: 40rpx 150rpx;
+    padding: 10rpx;
+    border-radius: 10rpx;
+}

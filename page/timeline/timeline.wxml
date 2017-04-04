@@ -1,0 +1,66 @@
+<import src="../../common/template/load.wxml" />
+
+<template is="load" data="{{...load}}" />
+
+<view class="page timeline-bg">
+
+    <!-- year -->
+    <block wx:for="{{dataList}}" wx:key="key_year" wx:for-index="index_year" wx:for-item="item_year">
+
+        <view class="timeline-year timeline-center">
+            <view class="timeline-year_text">{{item_year.year}}</view>
+        </view>
+
+        <!-- event -->
+        <block wx:for="{{item_year.items}}" wx:key="key" wx:for-index="index" wx:for-item="item">
+
+            <!-- box -->
+            <view animation="{{nodeList[item.count]['boxAnimation']}}" class="{{nodeList[item.count]['box']}} scale1 timeline-box weui-flex timeline-{{item.type}}" data-count="{{item.count}}" data-large="large" bindtap="tap" data-event="ShowBox">
+                <block wx:if="{{item.type == 'right'}}">
+                    <view class="timeline-event-point {{item.color}}"></view>
+                </block>
+                <view class="timeline-event weui-flex__item event-box">
+                    <view class="event-hd {{item.color}}">{{item.title}}</view>
+                    <view class="event-bd">
+                        <view>{{item.place}}</view>
+                        <view>{{item.date}}</view>
+                    </view>
+                    <view class="weui-footer">
+                        <view class="weui-footer__text">展开 ︾</view>
+                    </view>
+                </view>
+                <block wx:if="{{item.type == 'left'}}">
+                    <view class="timeline-event-point {{item.color}}"></view>
+                </block>
+            </view>
+
+            <!-- largebox -->
+            <view animation="{{nodeList[item.count]['largeboxAnimation']}}" data-count="{{item.count}}" class="{{nodeList[item.count]['largebox']}} timeline-box-main scale0" bindtap="tap" data-event="ShowBox">
+                <view class="timeline-event weui-flex__item event-box">
+                    <view class="event-hd weui-flex {{item.color}}">
+                        <view class="weui-flex__item">{{item.title}}</view>
+                        <view class="weui-flex__item event-hd-right small">
+                            <view>{{item.date}}</view>
+                            <view>{{item.place}}</view>
+                        </view>
+                    </view>
+                    <view class="event-bd">
+                        <view>
+                            <image src="{{nodeList[item.count]['picture']}}" class="{{nodeList[item.count]['pictureClass']}}"></image>
+                            {{item.content}}
+                        </view>
+                    </view>
+                    <view class="event-bd weui-flex small gray">
+                        <view class="weui-flex__item">阅读原文</view>
+                        <view class="weui-flex__item event-hd-right">
+                            <view>收起 ︽</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+        </block>
+
+    </block>
+
+</view>

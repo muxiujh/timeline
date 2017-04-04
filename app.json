@@ -1,0 +1,23 @@
+{
+  "tabBar": {
+    "selectedColor": "#666699",
+    "list": [
+      {
+        "pagePath": "page/timeline/timeline",
+        "iconPath": "image/moto.png",
+        "selectedIconPath": "image/moto_highlight.png",
+        "text": "历程"
+      },
+      {
+        "pagePath": "page/about/about",
+        "iconPath": "image/about.png",
+        "selectedIconPath": "image/about_highlight.png",
+        "text": "简介"
+      }
+    ]
+  },
+  "pages": [
+    "page/timeline/timeline",
+    "page/about/about"
+  ]
+}
