@@ -1,9 +1,10 @@
 
 var AppData = {
-    Url: "https://wx.ihaining.net/",
+    Url: "https://wx.hnec.gov.cn/",
     UrlActivityList: "Wx/ActivityList",
     UrlAboutList: "Wx/SiteInfo",
     UrlImage: "Upload/Show",
+    AppName:"海宁市电子商务协会官方",
 
     Init: function () {
         this.UrlActivityList = this.Url + this.UrlActivityList;

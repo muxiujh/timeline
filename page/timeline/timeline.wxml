@@ -44,14 +44,14 @@
                             <view>{{item.place}}</view>
                         </view>
                     </view>
-                    <view class="event-bd">
+                    <view class="event-bd event-summary">
                         <view>
-                            <image src="{{nodeList[item.count]['picture']}}" class="{{nodeList[item.count]['pictureClass']}}"></image>
-                            {{item.content}}
+                            <image mode="widthFix" style="width:100%" src="{{nodeList[item.count]['picture']}}" class="{{nodeList[item.count]['pictureClass']}}"></image>
+                            {{item.summary}}
                         </view>
                     </view>
                     <view class="event-bd weui-flex small gray">
-                        <view class="weui-flex__item">阅读原文</view>
+                        <view class="weui-flex__item hidden">阅读原文</view>
                         <view class="weui-flex__item event-hd-right">
                             <view>收起 ︽</view>
                         </view>

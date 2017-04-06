@@ -99,11 +99,12 @@ class TimelineLogic extends Logic
         function show() {
             var node = m.nodeList[count];
             if (node["pic_path"] != "") {
-                m.ui.SetData(Tool.BuildKeyString(nodeKey, "picture"), m.config.UrlImage + "?size=small&pic=" + node["pic_path"]);
+                m.ui.SetData(Tool.BuildKeyString(nodeKey, "picture"), m.config.UrlImage + "?size=large&pic=" + node["pic_path"]);
                 m.ui.SetData(Tool.BuildKeyString(nodeKey, "pictureClass"), m.c_showClass);
             }
             m.ui.RunAnimation(Tool.BuildKeyString(nodeKey, showPre + "boxAnimation"), showDuration, true);
         }
+
     }
 }
 
@@ -114,6 +115,9 @@ controller = {
     },
     tap: function (e) {
         this.logic.tap(e);
+    },
+    onShareAppMessage: function () {
+        return this.logic.share();
     }
 }
 

@@ -42,7 +42,11 @@ controller = {
     },
     tap: function (e) {
         this.logic.tap(e);
+    },
+    onShareAppMessage: function () {
+        return this.logic.share();
     }
+
 }
 
 Page(controller);

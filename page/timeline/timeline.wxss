@@ -62,6 +62,9 @@
     padding: 6rpx 16rpx;
     font-size: 14px;
 }
+.event-summary{
+    font-size: 16px;
+}
 .timeline-box-main{
     margin: 20rpx 50rpx 60rpx;
 }

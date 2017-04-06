@@ -13,6 +13,12 @@ class Logic
         var data = e.currentTarget.dataset;
         this[data.event](data);
     }
+
+    share() {
+        return {
+            title: this.config["AppName"]
+        };
+    }
 }
 
 module.exports = Logic;
