@@ -28,6 +28,19 @@ class UI
         container.step();
         this.SetData(amination, container.export());
     }
+
+    ShowLoading() {
+        var duration = 1000;
+        wx.showLoading({
+            title: "加载更多...",
+            mask: true
+        });
+        setTimeout(this.HideLoading, duration);
+    }
+
+    HideLoading() {
+        wx.hideLoading();
+    }
 }
 
 module.exports = UI;

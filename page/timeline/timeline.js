@@ -21,12 +21,16 @@ class TimelineLogic extends Logic
         m.c_hiddenClass = "hidden";
         m.c_showClass = "";
         m.c_large = 'large';
+
+        m.year = "";
+        m.nodeList = new Array();
+        m.pageIndex = 1;
     }
 
-    GetList() {
+    GetList(p) {
         m.load.Start();
         wx.request({
-            url: m.config.UrlActivityList,
+            url: m.config.UrlActivityPage + p,
             success: m.successGetList,
             fail: m.failGetList
         });
@@ -39,23 +43,27 @@ class TimelineLogic extends Logic
         }
         m.load.Success();
 
-        var count = 0;
         var dataList = res.data.list;
-        m.nodeList = [];
-        for(var listYear of dataList) {
-            var nodes = listYear["items"];
-            for(var node of nodes) {
-                node["color"] = "color_" + count % 5;
-                count++;
-                node["count"] = count;
-                node["type"] = (count % 2 == 1) ? "right" : "left";
-                node["box"] = m.load.showClass;
-                node["largebox"] = m.c_hiddenClass;
-                node["pictureClass"] = m.c_hiddenClass;
-                m.nodeList[count] = node;
-            }
+        if (dataList.length == 0) {
+            m.pageIndex = false;
+            return;
         }
-        m.ui.SetData(m.c_dataList, dataList);
+
+        var index = m.nodeList.length;
+        for(var node of dataList) {
+            if (node["year"] != m.year) {
+                m.year = node["year"];
+                node["yearNew"] = true;
+            }
+            node["color"] = "color_" + index % 5;
+            node["type"] = (index % 2 == 0) ? "right" : "left";
+            node["box"] = m.c_showClass;
+            node["largebox"] = m.c_hiddenClass;
+            node["pictureClass"] = m.c_hiddenClass;
+            m.nodeList[index] = node;
+            index++;
+        }
+
         m.ui.SetData(m.c_nodeList, m.nodeList);
     }
 
@@ -63,11 +71,23 @@ class TimelineLogic extends Logic
         m.load.Fail();
     }
 
+    PullDownRefresh() {
+    }
+
+    ReachBottom() {
+        if (m.pageIndex == false) {
+            return;
+        }
+
+        m.GetList(++m.pageIndex);
+        m.ui.ShowLoading();
+    }
+
     ShowBox(data) {
         var that = this;
-        var count = data.count;
+        var index = data.index;
         var large = data.large;
-        var nodeKey = Tool.BuildKey(m.c_nodeList, count);
+        var nodeKey = Tool.BuildKey(m.c_nodeList, index);
 
         var showPre = '';
         var hidePre = '';
@@ -97,7 +117,7 @@ class TimelineLogic extends Logic
 
         // 3. show box, showDuration
         function show() {
-            var node = m.nodeList[count];
+            var node = m.nodeList[index];
             if (node["pic_path"] != "") {
                 m.ui.SetData(Tool.BuildKeyString(nodeKey, "picture"), m.config.UrlImage + "?size=large&pic=" + node["pic_path"]);
                 m.ui.SetData(Tool.BuildKeyString(nodeKey, "pictureClass"), m.c_showClass);
@@ -118,6 +138,12 @@ controller = {
     },
     onShareAppMessage: function () {
         return this.logic.share();
+    },
+    onPullDownRefresh: function () {
+        this.logic.PullDownRefresh();
+    },
+    onReachBottom: function () {
+        this.logic.ReachBottom();
     }
 }
 
