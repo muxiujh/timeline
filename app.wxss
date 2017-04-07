@@ -1,5 +1,8 @@
 @import "style/weui_1.1.1.wxss";
 
+.loading{
+    background-color:white
+}
 .toload{
     height: 600rpx;
     padding-top: 200rpx;

@@ -3,8 +3,7 @@ var Tool = require("../../common/js/tool.js");
 var m = {};
 
 /*
-    "dataList": {}
-    "nodeList": {}
+    "pageList": []
 */
 class TimelineLogic extends Logic
 {
@@ -16,15 +15,17 @@ class TimelineLogic extends Logic
         m.c_durationShort = 500;
         m.c_durationTiny = 100;
         m.c_dataList = "dataList";
-        m.c_nodeList = "nodeList";
+        m.c_pageList = "pageList";
 
         m.c_hiddenClass = "hidden";
         m.c_showClass = "";
         m.c_large = 'large';
 
         m.year = "";
-        m.nodeList = new Array();
+        m.pageList = [];
         m.pageIndex = 1;
+
+        m.setPageTotal(20);
     }
 
     GetList(p) {
@@ -34,6 +35,14 @@ class TimelineLogic extends Logic
             success: m.successGetList,
             fail: m.failGetList
         });
+    }
+
+    setPageTotal(pageTotal) {
+        var pageNumArr = [];
+        for (var i = 1; i <= pageTotal; ++i) {
+            pageNumArr.push(i);
+        }
+        m.ui.SetData("pageNumArr", pageNumArr)
     }
 
     successGetList(res) {
@@ -48,8 +57,9 @@ class TimelineLogic extends Logic
             m.pageIndex = false;
             return;
         }
-
-        var index = m.nodeList.length;
+        
+        var nodeList = m.pageList[m.pageIndex] = [];
+        var index = 0;
         for(var node of dataList) {
             if (node["year"] != m.year) {
                 m.year = node["year"];
@@ -60,11 +70,11 @@ class TimelineLogic extends Logic
             node["box"] = m.c_showClass;
             node["largebox"] = m.c_hiddenClass;
             node["pictureClass"] = m.c_hiddenClass;
-            m.nodeList[index] = node;
+            nodeList[index] = node;
             index++;
         }
-
-        m.ui.SetData(m.c_nodeList, m.nodeList);
+        var pageKey = Tool.BuildKey(m.c_pageList, m.pageIndex);
+        m.ui.SetData(pageKey, nodeList);
     }
 
     failGetList(res) {
@@ -80,14 +90,14 @@ class TimelineLogic extends Logic
         }
 
         m.GetList(++m.pageIndex);
-        m.ui.ShowLoading();
     }
 
     ShowBox(data) {
-        var that = this;
+        var pageNum = data.pagenum;
         var index = data.index;
         var large = data.large;
-        var nodeKey = Tool.BuildKey(m.c_nodeList, index);
+        var nodeKey = Tool.BuildKey(m.c_pageList, pageNum);
+        nodeKey = Tool.BuildKey(nodeKey, index);
 
         var showPre = '';
         var hidePre = '';
@@ -117,7 +127,7 @@ class TimelineLogic extends Logic
 
         // 3. show box, showDuration
         function show() {
-            var node = m.nodeList[index];
+            var node = m.pageList[pageNum][index];
             if (node["pic_path"] != "") {
                 m.ui.SetData(Tool.BuildKeyString(nodeKey, "picture"), m.config.UrlImage + "?size=large&pic=" + node["pic_path"]);
                 m.ui.SetData(Tool.BuildKeyString(nodeKey, "pictureClass"), m.c_showClass);
